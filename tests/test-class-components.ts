@@ -4,7 +4,9 @@ import * as m from 'mithril'
 // 0.
 // Simplest component example - no attrs or state.
 //
-class Comp0 {
+class Comp0 implements Mithril.ClassComponent<{}> {
+	constructor (vnode: Mithril.CVnode<{}>) {
+	}
 	view() {
 		return m('span', "Test")
 	}
@@ -21,9 +23,11 @@ m.mount(document.getElementById('comp0')!, null)
 // Simple example. Vnode type for component methods is inferred.
 //
 class Comp1 implements Mithril.ClassComponent<{}> {
+	oninit (vnode: Mithril.CVnode<{}>) {
+	}
 	oncreate ({dom}: Mithril.CVnodeDOM<{}>) {
 	}
-	view (vnode: Mithril.CVnodeDOM<{}>) {
+	view (vnode: Mithril.CVnode<{}>) {
 		return m('span', "Test")
 	}
 }
@@ -108,7 +112,7 @@ class Comp4 implements Mithril.ClassComponent<Comp4Attrs> {
 //
 // Concise module example with default export
 //
-interface Attrs {
+export interface Attrs {
 	name: string
 }
 
