@@ -20,7 +20,7 @@ m.mount(document.getElementById('comp0')!, null)
 
 ///////////////////////////////////////////////////////////
 // 1.
-// Simple example. Vnode type for component methods is inferred.
+// Simple example with lifecycle methods.
 //
 class Comp1 implements Mithril.ClassComponent<{}> {
 	oninit (vnode: Mithril.CVnode<{}>) {
@@ -34,7 +34,7 @@ class Comp1 implements Mithril.ClassComponent<{}> {
 
 ///////////////////////////////////////////////////////////
 // 2.
-// Component with attrs
+// Component with attrs type
 //
 interface Comp2Attrs {
 	title: string
@@ -66,6 +66,7 @@ class Comp3 implements Mithril.ClassComponent<{pageHead: string}> {
 					title: "A Title",
 					description: "Some descriptive text.",
 					onremove: (vnode) => {
+						// Vnode type is inferred
 						console.log("comp2 was removed")
 					},
 				}
@@ -79,19 +80,18 @@ class Comp3 implements Mithril.ClassComponent<{pageHead: string}> {
 
 ///////////////////////////////////////////////////////////
 // 4.
-// Typed attrs and state, and `this` type is inferred.
+// Typed attrs, component with state, methods
 //
 interface Comp4Attrs {
 	name: string
 }
 
 class Comp4 implements Mithril.ClassComponent<Comp4Attrs> {
-	count: number // <- Must be declared to satisfy Comp4 type which includes Comp4State type
+	count: number
 	constructor (vnode: Mithril.CVnode<Comp4Attrs>) {
 		this.count = 0
 	}
 	add (num: number) {
-		// num and this types inferred
 		this.count += num
 	}
 	view ({attrs}: Mithril.CVnode<Comp4Attrs>) {
@@ -99,7 +99,6 @@ class Comp4 implements Mithril.ClassComponent<Comp4Attrs> {
 			m('h1', `This ${attrs.name} has been clicked ${this.count} times`),
 			m('button',
 				{
-					// 'this' is typed!
 					onclick: () => this.add(1)
 				},
 			"Click me")
