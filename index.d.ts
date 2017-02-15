@@ -18,18 +18,18 @@ declare namespace Mithril {
 
 	interface Hyperscript {
 		(selector: string, ...children: any[]): Vnode<any,any>;
-		<A,S>(component: Component<A,S>, a?: (A & Lifecycle<A,S>) | Children, ...children: Children[]): Vnode<A,S>;
+		<A,S>(component: Component<A,S> | {new(): Component<A,S>} | FactoryComponent<A,S>, a?: (A & Lifecycle<A,S>) | Children, ...children: Children[]): Vnode<A,S>;
 		fragment(attrs: any, children: Children[]): Vnode<any,any>;
 		trust(html: string): Vnode<any,any>;
 	}
 
 	interface RouteResolver {
 		render?: (vnode: Mithril.Vnode<any,any>) => Children;
-		onmatch?: (args: any, requestedPath: string) => Mithril.Component<any,any> | Promise<Mithril.Component<any,any>> | void;
+		onmatch?: (args: any, requestedPath: string) => Mithril.Component<any,any> | {new(): Component<any,any>} | FactoryComponent<any,any> | Promise<Mithril.Component<any,any> | {new(): Component<any,any>} | FactoryComponent<any,any>> | void;
 	}
 
 	interface RouteDefs {
-		[url: string]: Component<any,any> | RouteResolver;
+		[url: string]: Component<any,any> | {new(): Component<any,any>} | FactoryComponent<any,any> | RouteResolver;
 	}
 
 	interface RouteOptions {
@@ -48,7 +48,7 @@ declare namespace Mithril {
 	}
 
 	interface Mount {
-		(element: Element, component: Component<any,any> | null): void;
+		(element: Element, component: Component<any,any> | {new(): ClassComponent<any>} | FactoryComponent<any,any> | null): void;
 	}
 
 	interface WithAttr {
@@ -163,8 +163,22 @@ declare namespace Mithril {
 		domSize?: number;
 	}
 
+	interface CVnode<A> extends Vnode<A, ClassComponent<A>> {}
+
+	interface CVnodeDOM<A> extends VnodeDOM<A, ClassComponent<A>> {}
+
 	interface Component<A, S extends Lifecycle<A,S>> extends Lifecycle<A,S> {
-		view: (this: S, vnode: Vnode<A,S>) => Vnode<any,any> | null | void | (Vnode<any,any> | null | void)[];
+		view (this: S, vnode: Vnode<A,S>): Vnode<any,any> | null | void | (Vnode<any,any> | null | void)[];
+	}
+
+	interface ClassComponent<A> extends Lifecycle<A,ClassComponent<A>> {
+		//new (...args: any[]): ClassComponent<A>;
+		view (this: ClassComponent<A>, vnode: CVnode<A>): CVnode<any> | null | void | (CVnode<any> | null | void)[];
+	}
+
+	// Factory component
+	interface FactoryComponent<A,S> {
+		(vnode: Vnode<A,S>): Component<A,S>
 	}
 
 	type Unary<T,U> = (input: T) => U;
