@@ -137,6 +137,18 @@ const comp5: Mithril.Component<Comp4Attrs,Comp4State> = {
 	}
 }
 
+///////////////////////////////////////////////////////////
+//
+// Test that all are mountable components
+//
+m.route(document.body, '/', {
+	'/comp0': comp0,
+	'/comp1': comp1,
+	'/comp2': comp2,
+	'/comp3': comp3,
+	'/comp4': comp4,
+	'/comp5': comp5
+})
 
 ///////////////////////////////////////////////////////////
 //

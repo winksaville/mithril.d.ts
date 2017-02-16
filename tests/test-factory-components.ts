@@ -147,6 +147,18 @@ const comp5 = function() {
 	}
 } as Mithril.FactoryComponent<Comp4Attrs,Comp5State>
 
+///////////////////////////////////////////////////////////
+//
+// Test that all are valid components
+//
+m.route(document.body, '/', {
+	'/comp0': comp0,
+	'/comp1': comp1,
+	'/comp2': comp2,
+	'/comp3': comp3,
+	'/comp4': comp4,
+	'/comp5': comp5
+})
 
 ///////////////////////////////////////////////////////////
 //
