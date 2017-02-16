@@ -92,7 +92,7 @@ interface Comp4Attrs {
 	name: string
 }
 
-const comp4 = function() {
+function comp4(): Mithril.Component<Comp4Attrs,{}> {
 	let count = 0
 
 	function add (num: number) {
@@ -115,7 +115,7 @@ const comp4 = function() {
 			]
 		}
 	}
-} as Mithril.FactoryComponent<Comp4Attrs,{}>
+}
 
 ///////////////////////////////////////////////////////////
 // 5.
@@ -127,7 +127,7 @@ interface Comp5State {
 	add (num: number): void
 }
 
-const comp5 = function() {
+function comp5(): Mithril.Component<Comp4Attrs,Comp5State> {
 	return {
 		oninit ({state}) {
 			state.count = 0
@@ -145,11 +145,11 @@ const comp5 = function() {
 			]
 		}
 	}
-} as Mithril.FactoryComponent<Comp4Attrs,Comp5State>
+}
 
 ///////////////////////////////////////////////////////////
 //
-// Test that all are valid components
+// Test that all are mountable components
 //
 m.route(document.body, '/', {
 	'/comp0': comp0,
@@ -168,11 +168,11 @@ interface Attrs {
 	name: string
 }
 
-export default (function() {
+export default (): Mithril.Component<Attrs,{}> => {
 	let count = 0
 	return {
 		view ({attrs}) {
 			return m('span', `name: ${attrs.name}, count: ${count}`)
 		}
 	}
-}) as Mithril.FactoryComponent<Attrs,{}>
+}
