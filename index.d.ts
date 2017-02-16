@@ -176,9 +176,7 @@ declare namespace Mithril {
 	}
 
 	// Factory component
-	interface FactoryComponent<A,S> {
-		(vnode: Vnode<A,S>): Component<A,S>
-	}
+	type FactoryComponent<A,S> = (vnode: Vnode<A,S>) => Component<A,S>
 
 	type Unary<T,U> = (input: T) => U;
 
