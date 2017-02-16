@@ -156,10 +156,6 @@ interface Attrs {
 	name: string
 }
 
-interface State {
-	count: number
-}
-
 export default (function() {
 	let count = 0
 	return {
@@ -167,4 +163,4 @@ export default (function() {
 			return m('span', `name: ${attrs.name}, count: ${count}`)
 		}
 	}
-}) as Mithril.FactoryComponent<Attrs,State>
+}) as Mithril.FactoryComponent<Attrs,{}>
