@@ -108,10 +108,10 @@ function comp4(): Mithril.Component<Comp4Attrs,{}> {
 				m('h1', `This ${attrs.name} has been clicked ${count} times`),
 				m('button',
 					{
-						// 'this' is typed!
 						onclick: () => add(1)
 					},
-				"Click me")
+					"Click me"
+				)
 			]
 		}
 	}
