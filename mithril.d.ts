@@ -126,9 +126,9 @@ declare namespace Mithril {
 	}
 
 	interface Jsonp {
-		/** Makes JSON-P requests. */
+		/** Makes a JSON-P request and returns a promise. */
 		<T>(options: JsonpOptionsAll): Promise<T>;
-		/** Makes JSON-P requests. */
+		/** Makes a JSON-P request and returns a promise. */
 		<T>(url: string, options?: JsonpOptions): Promise<T>;
 	}
 
