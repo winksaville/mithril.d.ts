@@ -1,24 +1,16 @@
 # Typescript Definitions for [Mithril 1.0](https://github.com/lhorie/mithril.js)
 
-Requires TypeScript 2.x.
-
 ## Install
 
-For now, install directly from this Github repo with:
+Types are included with Mithril 1.0, so simply install mithril.js:
 
-	npm install -D github:spacejack/mithril.d.ts#1.0.1
-
-which will add this entry to your package.json devDependencies:
-
-	"@types/mithril": "github:spacejack/mithril.d.ts#1.0.1"
-
-**If you are not bundling** and instead are including mithril.js in a separate script tag then you will need to install the global version. You can find that [here](https://github.com/spacejack/mithril-global.d.ts).
+	npm install -S mithril.js
 
 ---
 
 ### The Gist:
 
-Here is a very basic component/module example:
+#### POJO component example:
 
 ```typescript
 import * as m from 'mithril'
@@ -37,6 +29,41 @@ export default {
 		return m('span', `name: ${attrs.name}, count: ${this.count}`)
 	}
 } as Mithril.Component<Attrs,State> & State
+```
+
+#### ClassComponent example:
+
+```typescript
+import * as m from 'mithril'
+
+export interface Attrs {
+	name: string
+}
+
+export default class MyComponent implements Mithril.ClassComponent<Attrs> {
+	count = 0
+	// Note that class methods cannot infer parameter types
+	view ({attrs}: Mithril.CVnode<Attrs>) {
+		return m('span', `name: ${attrs.name}, count: ${this.count}`)
+	}
+}
+```
+
+#### FactoryComponent example
+
+```typescript
+import * as m from 'mithril'
+
+export interface Attrs {
+	name: string
+}
+
+export default export default (): Mithril.Component<Attrs,{}> => {
+	let count = 0
+	view ({attrs}) {
+		return m('span', `name: ${attrs.name}, count: ${count}`)
+	}
+}
 ```
 
 For more example usage see the `tests` folder.
